@@ -40,7 +40,7 @@ jobs:
         run: |
           cd param-docs
           # Fetch the parameter pages from the main repo
-          git clone https://github.com/jomjol/AI-on-the-edge-device.git
+          git clone https://github.com/li-yibing/esp32-edge-computing-docs.git
           python concat-parameter-pages.py
         
       - name: Store Documentation in the gh-pages branch so it gets pushed to the website
