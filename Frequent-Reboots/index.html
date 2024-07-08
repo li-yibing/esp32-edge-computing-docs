@@ -1,0 +1,1006 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="https://li-yibing.github.io/esp32-edge-computing-docs/Frequent-Reboots/" rel="canonical"/>
+<link href="../Error-Debugging/" rel="prev"/>
+<link href="../Demo-Mode/" rel="next"/>
+<link href="../img/favicon.ico" rel="icon"/>
+<meta content="mkdocs-1.6.0, mkdocs-material-9.5.28" name="generator"/>
+<title>Basic hardware/config issues - ESP32 Edge Computing</title>
+<link href="../assets/stylesheets/main.6543a935.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="indigo" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#basic-hardware-configuration-issues">1. 
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="ESP32 Edge Computing" class="md-header__button md-logo" data-md-component="logo" href=".." title="ESP32 Edge Computing">
+<img alt="logo" src="../img/logo.svg"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            ESP32 Edge Computing
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Basic hardware/config issues
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/li-yibing/esp32-edge-computing-docs" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="ESP32 Edge Computing" class="md-nav__button md-logo" data-md-component="logo" href=".." title="ESP32 Edge Computing">
+<img alt="logo" src="../img/logo.svg"/>
+</a>
+    ESP32 Edge Computing
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/li-yibing/esp32-edge-computing-docs" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Getting Started
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_1_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_1">
+<span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Welcome
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Installation/">
+<span class="md-ellipsis">
+    Installation
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../initial-setup/">
+<span class="md-ellipsis">
+    Initial Setup
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Hardware-Compatibility/">
+<span class="md-ellipsis">
+    Hardware Compatibility
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Best-Practice/">
+<span class="md-ellipsis">
+    Best Practice
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../FAQs/">
+<span class="md-ellipsis">
+    Frequently Asked Questions
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Configuration
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Configuration
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Reference-Image/">
+<span class="md-ellipsis">
+    Reference Image
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Alignment/">
+<span class="md-ellipsis">
+    Alignment References
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ROI-Configuration/">
+<span class="md-ellipsis">
+    ROIs (Regions of Interest)
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Configuration/">
+<span class="md-ellipsis">
+    Graphical Configuration
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Choosing-the-Model/">
+<span class="md-ellipsis">
+    Model Selection
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ota/">
+<span class="md-ellipsis">
+    Over-The-Air (OTA) Update
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Advanced
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Advanced
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Parameters/">
+<span class="md-ellipsis">
+    Parameters
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Integration-Home-Assistant/">
+<span class="md-ellipsis">
+    Integration into Home Assistant
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../External-LED/">
+<span class="md-ellipsis">
+    External LED
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data-logging/">
+<span class="md-ellipsis">
+    Data Logging
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../rolling-installation/">
+<span class="md-ellipsis">
+    Living on the Edge
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Watermeter-specific-analog---digital-transition/">
+<span class="md-ellipsis">
+    Analog/Digital Transition on Water Meters
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../collect-new-images/">
+<span class="md-ellipsis">
+    Collect images to improve the models
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Learn-models-with-your-own-images/">
+<span class="md-ellipsis">
+    Learn a model with your own images
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Correction%20Algorithm/">
+<span class="md-ellipsis">
+    Correction Algorithm
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Neural-Network-Types/">
+<span class="md-ellipsis">
+    Neural Network Types
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Additional-Information/">
+<span class="md-ellipsis">
+    Additional Information
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../New-Releases-Notification/">
+<span class="md-ellipsis">
+    Notification about new Releases
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../prometheus-openmetrics/">
+<span class="md-ellipsis">
+    Prometheus/OpenMetrics
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Troubleshooting
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Troubleshooting
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Error-Codes/">
+<span class="md-ellipsis">
+    Reduced webinterface (error codes)
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../StatusLED-BlinkCodes/">
+<span class="md-ellipsis">
+    Board status LED (blink codes)
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../WLAN-disconnect-reason/">
+<span class="md-ellipsis">
+    WLAN disconnect reasons
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Error-Debugging/">
+<span class="md-ellipsis">
+    Often observed issues
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Basic hardware/config issues
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Basic hardware/config issues
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sporadic-random-reboots">1.0.1 
+<span class="md-ellipsis">
+      Sporadic random reboots
+    </span>
+</a>
+<nav aria-label="Sporadic random reboots" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-instabilities">1.0.1.0.1 
+<span class="md-ellipsis">
+      System instabilities
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overload-during-html-access">1.0.1.1 
+<span class="md-ellipsis">
+      Overload during HTML access
+    </span>
+</a>
+<nav aria-label="Overload during HTML access" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bad-or-insufficient-power-supply">1.0.1.1.1 
+<span class="md-ellipsis">
+      Bad or insufficient power supply
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#repeating-boot-loops">1.0.2 
+<span class="md-ellipsis">
+      Repeating boot loops
+    </span>
+</a>
+<nav aria-label="Repeating boot loops" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sd-card-related-issues">1.0.2.0.1 
+<span class="md-ellipsis">
+      SD card related issues
+    </span>
+</a>
+<nav aria-label="SD card related issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sd-card-wrong-filesystem-only-fat32-is-supported">1.0.2.0.1.1 
+<span class="md-ellipsis">
+      SD card: Wrong filesystem (only FAT32 is supported)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sd-card-not-detected-not-supported">1.0.2.0.1.2 
+<span class="md-ellipsis">
+      SD card not detected / not supported
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sd-card-detected-but-files-are-not-readable-writeable">1.0.2.0.1.3 
+<span class="md-ellipsis">
+      SD card detected but files are not readable / writeable
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ram-related-issues">1.0.2.0.2 
+<span class="md-ellipsis">
+      RAM related issues
+    </span>
+</a>
+<nav aria-label="RAM related issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#too-less-external-ram-psram">1.0.2.0.2.1 
+<span class="md-ellipsis">
+      Too less external RAM (PSRAM)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-related-issues">1.0.2.0.3 
+<span class="md-ellipsis">
+      Configuration related issues
+    </span>
+</a>
+<nav aria-label="Configuration related issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#folders-and-files-missing">1.0.2.0.3.1 
+<span class="md-ellipsis">
+      Folders and files missing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cnn-model-file-not-available-corrupt">1.0.2.0.3.2 
+<span class="md-ellipsis">
+      CNN model file not available / corrupt
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Demo-Mode/">
+<span class="md-ellipsis">
+    Demo mode
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Quick Links
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Quick Links
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="https://github.com/jomjol/AI-on-the-edge-device/releases">
+<span class="md-ellipsis">
+    Releases
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="https://jomjol.github.io/AI-on-the-edge-device/index.html">
+<span class="md-ellipsis">
+    Web Installer/Console
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="https://github.com/jomjol/AI-on-the-edge-device/issues">
+<span class="md-ellipsis">
+    Create an Issue
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="https://github.com/jomjol/AI-on-the-edge-device/discussions">
+<span class="md-ellipsis">
+    Join a Discussion
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    API's
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            API's
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../REST-API/">
+<span class="md-ellipsis">
+    REST API
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../MQTT-API/">
+<span class="md-ellipsis">
+    MQTT API
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Influx-DB/">
+<span class="md-ellipsis">
+    Influx DB
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Development
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Build-Instructions/">
+<span class="md-ellipsis">
+    Build the Project
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Upload-files-by-script/">
+<span class="md-ellipsis">
+    Scripted File Upload
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Testing/">
+<span class="md-ellipsis">
+    Testing Option for VSCode
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Release-creation/">
+<span class="md-ellipsis">
+    Preparing for Release
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    Old Pages (no longer maintained)
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            Old Pages (no longer maintained)
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../outdated--Integrated-Functions/">
+<span class="md-ellipsis">
+    Integrated Functions
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    Assorted Pages
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sporadic-random-reboots">1.0.1 
+<span class="md-ellipsis">
+      Sporadic random reboots
+    </span>
+</a>
+<nav aria-label="Sporadic random reboots" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-instabilities">1.0.1.0.1 
+<span class="md-ellipsis">
+      System instabilities
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overload-during-html-access">1.0.1.1 
+<span class="md-ellipsis">
+      Overload during HTML access
+    </span>
+</a>
+<nav aria-label="Overload during HTML access" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bad-or-insufficient-power-supply">1.0.1.1.1 
+<span class="md-ellipsis">
+      Bad or insufficient power supply
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#repeating-boot-loops">1.0.2 
+<span class="md-ellipsis">
+      Repeating boot loops
+    </span>
+</a>
+<nav aria-label="Repeating boot loops" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sd-card-related-issues">1.0.2.0.1 
+<span class="md-ellipsis">
+      SD card related issues
+    </span>
+</a>
+<nav aria-label="SD card related issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sd-card-wrong-filesystem-only-fat32-is-supported">1.0.2.0.1.1 
+<span class="md-ellipsis">
+      SD card: Wrong filesystem (only FAT32 is supported)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sd-card-not-detected-not-supported">1.0.2.0.1.2 
+<span class="md-ellipsis">
+      SD card not detected / not supported
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sd-card-detected-but-files-are-not-readable-writeable">1.0.2.0.1.3 
+<span class="md-ellipsis">
+      SD card detected but files are not readable / writeable
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ram-related-issues">1.0.2.0.2 
+<span class="md-ellipsis">
+      RAM related issues
+    </span>
+</a>
+<nav aria-label="RAM related issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#too-less-external-ram-psram">1.0.2.0.2.1 
+<span class="md-ellipsis">
+      Too less external RAM (PSRAM)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-related-issues">1.0.2.0.3 
+<span class="md-ellipsis">
+      Configuration related issues
+    </span>
+</a>
+<nav aria-label="Configuration related issues" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#folders-and-files-missing">1.0.2.0.3.1 
+<span class="md-ellipsis">
+      Folders and files missing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cnn-model-file-not-available-corrupt">1.0.2.0.3.2 
+<span class="md-ellipsis">
+      CNN model file not available / corrupt
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="basic-hardware-configuration-issues"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.</span> Basic hardware / configuration issues</h1>
+<p>If the device is behaving eratically or not running as expected you can use the following tools trying to identify the root cause:</p>
+<ol>
+<li>Internal logging (<code>config.ini</code>)
+   --&gt; Set to DEBUG log level</li>
+<li>Reduced web interface (only error indication visualization, <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/Error-Codes/">Error codes on reduced webinterface</a>)</li>
+<li>Red board LED: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/StatusLED-BlinkCodes/">Status LED Blinkcodes</a></li>
+<li>Serial log of the UART interface (USB access needed, only local, same as for flashing the firmware)</li>
+</ol>
+<p>There are in principle two reboots types:</p>
+<ol>
+<li>Sporadic random reboots (always different timing and situation)</li>
+<li>Repeating boot loops (reoccuring, always stop working after same precondition)</li>
+</ol>
+<hr/>
+<h3 id="sporadic-random-reboots"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.1</span> Sporadic random reboots</h3>
+<p>Sporadic random reboots could have the following reasons:</p>
+<ul>
+<li>In general: Unstable system due to software issues (e.g. overload during HTML access, ...)
+  --&gt; Trying the figure out what's the root cause to fix the issue</li>
+<li>Bad power supply
+  --&gt; The power supply need to stable to ensure proper operation of the device. If it's not stable the device tents to sporadic reboots (brownout detection)</li>
+</ul>
+<p>In general: There are several mechanisms in the firmware (like saving previous values), to have a "smooth" reboot without too many notable disturbance.</p>
+<h5 id="system-instabilities"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.1.0.1</span> System instabilities</h5>
+<p>If your system is sometimes running smoothly over several runs and sometimes reboots obviously randomly, you have an partially unstable device. </p>
+<p>You can check this in the standard log file on the SD card:</p>
+<pre><code>2021-12-26T06:34:09: task_autodoFlow - round done
+2021-12-26T06:34:09: CPU Temperature: 56.1
+2021-12-26T06:38:00: task_autodoFlow - next round - Round #23
+</code></pre>
+<p>Here you see, that the round #23 is starting, so obviously there were no reboots in the last 22 rounds. There is hardware (ESP32CAM), where only 2-3 stable rounds are possible and others, where way more than 100 rounds without any reboots is possible.
+There is noting you can do about it, beside testing different hardware.</p>
+<h4 id="overload-during-html-access"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.1.1</span> Overload during HTML access</h4>
+<p>If you frequently access the web server over HTML requests, the firmware tends to reboot. This especially happens during the first run and when the ESP32 is busy with the digitization flow. </p>
+<p>The reason for this are running out of memory during a flow, minor memory leakage in combination with missing error handling.</p>
+<p>There is noting you can do about this kind of reboot, beside two thing:</p>
+<ol>
+<li>Support the firmware development with improved and tested part of code</li>
+<li>Be patient :-)</li>
+</ol>
+<h5 id="bad-or-insufficient-power-supply"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.1.1.1</span> Bad or insufficient power supply</h5>
+<p>A good and stabilized power supply is essential to have error free operation. The device is quite picky in terms of proper power supply. Especially the wifi module have some load spikes which the power supply needs to cover. If the power is not stable enough, the brwonout mechanism is protecting against strange behaviour and force a reboot whenever the voltage drops below a specific level. You can see this in random reboots which indication is logfile: --&gt; Reset reason: Brownout</p>
+<hr/>
+<h3 id="repeating-boot-loops"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2</span> Repeating boot loops</h3>
+<p>Repeating boot loops at the same situation during the flow has a systematic problem either in the hardware or the configuration. It usually happens during initialization state or processing the first round as there all needed parts of the firmware have been loaded for the first time.</p>
+<p>To identify the root cause the logfiles, the reduced web interface, the red board LED or the serial log of the UART interface (no remote access, USB access needed) is helpful. </p>
+<p>Possible issues:</p>
+<ul>
+<li>SD card related issues</li>
+<li>RAM related issues</li>
+<li>Configuration related issues</li>
+</ul>
+<h5 id="sd-card-related-issues"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2.0.1</span> SD card related issues</h5>
+<p>The ESP32CAM is a little bit "picky" with the supported SD cards. Due to the limited availability of GPIOs the SD card can only be accessed via 1-wire mode. Therefore not all SD cards are supported. The following error cases can occur:</p>
+<h6 id="sd-card-wrong-filesystem-only-fat32-is-supported"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2.0.1.1</span> SD card: Wrong filesystem (only FAT32 is supported)</h6>
+<p>If this SD card error is detected only the following indications are available. No web interface will be accessible.</p>
+<ul>
+<li>Red board LED is blinking. The blinking codes are described here: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/StatusLED-BlinkCodes/">Status LED Blinkcodes</a></li>
+<li>Error messages on serial log (UART interface)</li>
+</ul>
+<h6 id="sd-card-not-detected-not-supported"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2.0.1.2</span> SD card not detected / not supported</h6>
+<p>If this SD card error is detected the following indication are available. No web interface will be accessible.</p>
+<ul>
+<li>Red board LED is blinking. The blinking codes are described here: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/StatusLED-BlinkCodes/">Status LED Blinkcodes</a></li>
+<li>Error messages on serial log (UART interface)</li>
+</ul>
+<h6 id="sd-card-detected-but-files-are-not-readable-writeable"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2.0.1.3</span> SD card detected but files are not readable / writeable</h6>
+<p>The SD card is detected, but the files cannot be read or written. A basic SD card check for SD reading / writing is performed on every boot. This not 100% guarantee that SD card is working but it's at least a indication.</p>
+<p>If this SD card error is detected the following indications are available:</p>
+<ul>
+<li>The reduced web interface will be loaded to have visual feedback of error situation. Regualar processing is disabled, though. Within this reduced web interface logs can be viewed to have further indication what's the root cause. Error code desciption can be found here: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/Error-Codes/">Error codes on reduced webinterface</a></li>
+<li>Error messages in logfile</li>
+<li>Red board LED is blinking. The blinking codes are described here: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/StatusLED-BlinkCodes/">Status LED Blinkcodes</a></li>
+<li>Error messages on serial log (UART interface)</li>
+</ul>
+<h5 id="ram-related-issues"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2.0.2</span> RAM related issues</h5>
+<p>In order to run the firmware, 4 MB of external RAM (PSRAM) are mandatory. Usually, the ESP32CAM is equipped with 8MB (64Mbit) PSRAM chip, whereof only 4MB can be used effectively (direct addressable).
+Unfortunately, there is hardware around, where no PSRAM or only 2MB of PSRAM is present - <strong>even if you have bought a device where a 8MB PSRAM was promoted</strong>. These modules are not suiable for this firmware because the external RAM is needed to handle the CNN files and camera images. There is nothing to do, than to buy a new ESP32CAM with <strong>really</strong> 64MBit of PSRAM. </p>
+<h6 id="too-less-external-ram-psram"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2.0.2.1</span> Too less external RAM (PSRAM)</h6>
+<p>During the boot process the available RAM is going to be checked.</p>
+<p>If there is too less RAM (PSRAM or total HEAP &lt; 4MB) detected, the follwoing indications are available:</p>
+<ul>
+<li>The reduced web interface will be loaded to have visual feedback of error situation. Regualar processing is disabled, though. Within this reduced web interface logs can be viewed to have further indication what's the root cause. Error code desciption can be found here: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/Error-Codes/">Error codes on reduced webinterface</a></li>
+<li>Error messages in logfile</li>
+<li>Red board LED is blinking. The blinking codes are described here: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/StatusLED-BlinkCodes/">Status LED Blinkcodes</a></li>
+<li>Error messages on serial log (UART interface)</li>
+</ul>
+<h5 id="configuration-related-issues"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2.0.3</span> Configuration related issues</h5>
+<h6 id="folders-and-files-missing"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2.0.3.1</span> Folders and files missing</h6>
+<p>Most of the relevant folders and files are checked during boot. The complete list can be found here: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/Error-Codes/">Error codes on reduced webinterface</a></p>
+<p>If a relevant folder or file is missing the following indications are available:</p>
+<ul>
+<li>The reduced web interface will be loaded to have visual feedback of error situation. Regualar processing is disabled, though. Within this reduced web interface logs can be viewed to have further indication what's the root cause. Error code desciption can be found here: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/Error-Codes/">Error codes on reduced webinterface</a></li>
+<li>Error messages in logfile</li>
+<li>Red board LED is blinking. The blinking codes are described here: <a href="https://jomjol.github.io/AI-on-the-edge-device-docs/StatusLED-BlinkCodes/">Status LED Blinkcodes</a></li>
+<li>Error messages on serial log (UART interface)</li>
+</ul>
+<h6 id="cnn-model-file-not-available-corrupt"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.0.2.0.3.2</span> CNN model file not available / corrupt</h6>
+<p>Additionally for operation CNN model files on SD card are mandatory, one CNN model file for analog counter and for for digit numbers each.</p>
+<ul>
+<li><code>/config/XXXXX.tflite</code> (XXXXX is the file name, that is written in the <code>config.ini</code>)</li>
+</ul>
+<p>If the files which are configured in <code>config.ini</code> are not present or corrupt, the process is going to be interrupted (or at worst case a device crash occurs). Please check logs files to have an indicator for the root cause.</p>
+<p>This a logfile extract (DEBUB log level) where digit CNN model file is not present. The system is initializing the system and trying to load the model files:</p>
+<pre><code>[0d00h05m11s] 2023-03-27T12:25:14 [TFLITE] CTfLiteClass::LoadModel
+[0d00h05m11s] 2023-03-27T12:25:14 [TFLITE] CTfLiteClass::ReadFileToModel: /sdcard
+[0d00h05m11s] 2023-03-27T12:25:14 [PSRAM] Failed to allocate 0 bytes in PSRAM for 'TFLITE-&gt;modelfile'!
+[0d00h05m11s] 2023-03-27T12:25:14 [TFLITE] CTfLiteClass::ReadFileToModel: Can't allocate enough memory: 0
+[0d00h05m12s] 2023-03-27T12:25:14 [HEAP] CTfLiteClass::ReadFileToModel Heap Total: 2266214 | SPI Free: 2205939 | SPI Large Block: 2162688 | SPI Min Free: 2205423 | Int Free: 60275 | Int Large Block: 55296 | Int Min Free: 46451
+[0d00h05m12s] 2023-03-27T12:25:14 [CNN] Can't load tflite model -&gt; Init aborted!
+[0d00h05m12s] 2023-03-27T12:25:14 [HEAP] getNetworkParameter-LoadModel Heap Total: 2266214 | SPI Free: 2205939 | SPI Large Block: 2162688 | SPI Min Free: 2205423 | Int Free: 60275 | Int Large Block: 55296 | Int Min Free: 46451
+[0d00h05m12s] 2023-03-27T12:25:14 [PSRAM] Freeing memory in PSRAM used for 'TFLITE-&gt;modelfile'...
+[0d00h05m12s] 2023-03-27T12:25:14 [PSRAM] Freeing memory in PSRAM used for 'TFLITE-&gt;tensor_arena'...
+[0d00h05m12s] 2023-03-27T12:25:14 [PSRAM] Allocated 819200 bytes in PSRAM for 'TFLITE-&gt;tensor_arena'
+[0d00h05m12s] 2023-03-27T12:25:14 [TFLITE] CTfLiteClass::LoadModel
+[0d00h05m12s] 2023-03-27T12:25:14 [TFLITE] CTfLiteClass::ReadFileToModel: /sdcard/config/ana-cont_1105_s2_q.tflite
+[0d00h05m12s] 2023-03-27T12:25:15 [PSRAM] Allocated 53328 bytes in PSRAM for 'TFLITE-&gt;modelfile'
+[0d00h05m12s] 2023-03-27T12:25:15 [TFLITE] CTfLiteClass::MakeAllocate
+[0d00h05m12s] 2023-03-27T12:25:15 [PSRAM] Freeing memory in PSRAM used for 'TFLITE-&gt;modelfile'...
+[0d00h05m12s] 2023-03-27T12:25:15 [PSRAM] Freeing memory in PSRAM used for 'TFLITE-&gt;tensor_arena'...
+</code></pre>
+<ul>
+<li>Bad config example:</li>
+<li>
+<p><code>[0d00h05m11s] 2023-03-27T12:25:14 [TFLITE] CTfLiteClass::ReadFileToModel: /sdcard</code>
+    --&gt; model file missing: check configuration or file presence </p>
+</li>
+<li>
+<p>Good config example:</p>
+</li>
+<li><code>[0d00h05m12s] 2023-03-27T12:25:14 [TFLITE] CTfLiteClass::ReadFileToModel: /sdcard/config/ana-cont_1105_s2_q.tflite</code>
+    --&gt; model file found: config OK</li>
+</ul>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+</body>
+</html>
