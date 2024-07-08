@@ -7,7 +7,7 @@
 ## 文档构建说明
 1. 你可以编辑任何在[docs](docs)文件夹中的`*.md`文件。
 2. 然后创建PR请求合并到`main`分支(或者直接在`main`分支编辑).
-3. 当发生合并时, [Github Actions](https://github.com/li-yibing/esp32-edge-computing-docs/actions)会重新生成文档并放置在`gh-pages`分支。 这个分支的内容会自动展示在[文档站点](https://li-yibing.github.io/esp32-edge-computing-docs/)。
+3. 当发生合并时, [Github Actions](https://github.com/li-yibing/esp32-edge-computing-docs/actions)会重新生成文档并放置在`gh-pages`分支(注意设置Github Actions有仓库读写权限)。 这个分支的内容会自动展示在[文档站点](https://li-yibing.github.io/esp32-edge-computing-docs/)。
 
 ## 编辑页面
 每个页面的右上角都有`Edit on GitHub`，点击可以进入GitHub进行编辑。

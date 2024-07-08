@@ -2,7 +2,7 @@
 # Build the documentation using mkdocs
 # This will update the gh-pages branch which in return triggers the pages-build-deployment
 # Action (provided by Github, not editable)
-# That action will publish it to https://jomjol.github.io/AI-on-the-edge-device-docs
+# That action will publish it to https://li-yibing.github.io/esp32-edge-computing-docs/
 ###########################################################################################
 
 name: Build Documentation
@@ -33,7 +33,7 @@ jobs:
       - uses: actions/setup-python@v5
       - run: |
           pip install --upgrade pip && pip install mkdocs mkdocs-gen-files mkdocs-awesome-pages-plugin mkdocs-material mkdocs-enumerate-headings-plugin
-          git config user.name 'li_yi_bing'
+          git config user.name 'li-yibing'
           git config user.email 'li_yi_bing@outlook.com'
           
       - name: Generate Parameter Page
