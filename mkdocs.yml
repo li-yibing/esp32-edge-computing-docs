@@ -1,8 +1,8 @@
-site_name: AI on the Edge Device
+site_name: ESP32 Edge Computing
 
-site_url: https://jomjol.github.io/AI-on-the-edge-device-docs/
-repo_url: https://github.com/jomjol/AI-on-the-edge-device-docs
-edit_uri: https://github.com/jomjol/AI-on-the-edge-device-docs/edit/main/docs
+site_url: https://li-yibing.github.io/esp32-edge-computing-docs/
+repo_url: https://github.com/li-yibing/esp32-edge-computing-docs
+edit_uri: https://github.com/li-yibing/esp32-edge-computing-docs/edit/main/docs
 
 theme: 
 #  name: readthedocs

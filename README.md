@@ -1,61 +1,58 @@
-# Documentation for the AI on the Edge Device Project
+# 文档说明
 
-Go to https://jomjol.github.io/AI-on-the-edge-device-docs to use it.
+文档地址：https://github.com/li-yibing/esp32-edge-computing-docs。
  
-This repo contains the documentation for the [AI-on-the-Edge-Device Project](https://github.com/jomjol/AI-on-the-edge-device).
+本仓库为[esp32-edge-computing](https://github.com/li-yibing/esp32-edge-computing)项目的说明文档。
 
-# How does it work
-1. You can edit any `*.md` document in the [docs](docs) folder.
-1. Then create a Pull Request for it to merge it into the `main` branch (or edit it directly in the `main` branch if you have the required rights).
-1. When it got merged, the [Github Actions](https://github.com/jomjol/AI-on-the-edge-device-docs/actions) will re-generate the documentation and place it in the `gh-pages` branch. This branch automatically gets populated to the public [Documentation Site](https://jomjol.github.io/AI-on-the-edge-device-docs)
+# 文档构建说明
+1. 你可以编辑任何在[docs](docs)文件夹中的`*.md`文件。
+2. 然后创建PR请求合并到`main`分支(或者直接在`main`分支编辑).
+3. 当发生合并时, [Github Actions](https://github.com/li-yibing/esp32-edge-computing-docs/actions)会重新生成文档并放置在`gh-pages`分支。 这个分支的内容会自动展示在[文档站点](https://li-yibing.github.io/esp32-edge-computing-docs/)。
 
-## Editing a page
-Each page has a link on its top-right corner `Edit on GitHub` which brings you directly to the Github editor.
+## 编辑页面
+每个页面的右上角都有`Edit on GitHub`，点击可以进入GitHub进行编辑。
 
-## Adding new pages
-1. Add a new `*.md` document in the [docs](docs) folder.
-1. Add the **filename** to the [docs/nav.yml](docs/nav.yml) at the wished position in the **Links** section.
+## 添加新页面
+1. 在[docs](docs)文件夹添加`*.md`文件。
+2. 在[docs/nav.yml](docs/nav.yml)添加**文件名**，并且注意控制层级关系。
 
-## Parameter Documentation
-Each parameter which is listed in the [configfile](https://github.com/jomjol/AI-on-the-edge-device/blob/rolling/sd-card/config/config.ini) in the main project repo 
-has its own description page in the folder `param-docs/parameter-pages` (grouped by the config sections).
-Those pages can be edited as needed.
+## 解析文档
+在主项目中[configfile](https://github.com/li-yibing/esp32-edge-computing/rolling/sd-card/config/config.ini)的每一个参数都进行了列举。
+他们的相关描述都在`param-docs/parameter-pages`(通过config模块进行配置)。
+当文档发生变化时，在`param-docs`文件夹下的`concat-parameter-pages.py`脚本需要被执行一次。
+这在Github action自动执行。
+它会将所有的文档添加到`../docs/Parameters.md`，这个文档被`mkdocs`所需要。
 
-The script `concat-parameter-pages.py` in `param-docs` should be run whenever one of the pages changed.
-This happens automatically in the Github action.
-It then concatenates all pages into the single `../docs/Parameters.md` which gets be added to the `mkdocs` documentation.
+### 模板生成
+当任何新参数添加到配置文件中，`generate-template-param-doc-pages.py`脚本都需要重新执行。
+然后检查是否每一个配置都有了对应的页面。
+ - 如果没有页面则生成一个模板页面。
+ - 如果页面已经存在，则不做任何变更。
 
-### Template Generator
-The script `generate-template-param-doc-pages.py` should be run whenever a new parameter gets added to the config file.
-It then checks if there is already page for each of the parameters.
- - If no page exists yet, a templated page gets generated.
- - Existing pages do not get modified.
+如果参数出现在`expert-params.txt`列表中, 会提示**Expert warning**。
 
-If the parameter is listed in `expert-params.txt`, an **Expert warning** will be shown.
+如果参数出现在`hidden-in-ui.txt`列表中, 会提示**Note**。
 
-If the parameter is listed in `hidden-in-ui.txt`, a **Note**  will be shown.
-
-## Formating
-### Boxes
-Boxes can be shown using the **admonition** extension.
+## 格式化
+### 文本块
+可以使用**！！！**扩展来创建一个文本块.
 ```
 !!! Note
     I am a note
 ```
-Make sure to have 4-whitespace Intents!
-Possible types: `attention, caution, danger, error, hint, important, note, tip, and warning`
-See https://python-markdown.github.io/extensions/admonition/
+记得增加4个空格!
+可选的类型有: `attention, caution, danger, error, hint, important, note, tip, warning`
+详见 https://python-markdown.github.io/extensions/admonition/
 
-## Local Test
-To test it locally:
-1. Clone this repo
-1. Install the required tools (See also [.github/workflows/build-docs.yaml](.github/workflows/build-docs.yaml)):
+## 本地测试
+在本地测试:
+1. 克隆仓库
+2. 安装文档创建工具(详见[.github/workflows/build-docs.yaml](.github/workflows/build-docs.yaml)):
     ```
     pip install --upgrade pip
     pip install mkdocs mkdocs-gen-files mkdocs-awesome-pages-plugin mkdocs-material pymdown-extensions mkdocs-enumerate-headings-plugin
     ```
-1. In the main folder of the repo, call `mkdocs serve` (and keep it running).
-  This will locally generate the documentation.
-  You can access it under http://127.0.0.1:8000/AI-on-the-edge-device-docs/
-
-    Any change to the files will automatically be applied.
+3. 在仓库文件夹, 调用`mkdocs serve`(保证其运行)，会自动产生文档。
+  你可以在 http://127.0.0.1:8000/AI-on-the-edge-device-docs/查看。
+    
+  任何文件的变更都是自动发布更新的。
