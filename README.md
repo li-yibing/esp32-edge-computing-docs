@@ -35,14 +35,14 @@
 
 ## 格式化
 ### 文本块
-可以使用 **!!!**扩展来创建一个文本块.
+可以使用 **!!!**扩展来创建一个文本块。
 ```
 !!! Note
     I am a note
 ```
 记得增加4个空格!
 可选的类型有: `attention, caution, danger, error, hint, important, note, tip, warning`
-详见 https://python-markdown.github.io/extensions/admonition/
+详见 https://python-markdown.github.io/extensions/admonition/。
 
 ## 本地测试
 在本地测试:
