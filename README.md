@@ -1,6 +1,6 @@
 # 文档说明
 
-文档地址：https://github.com/li-yibing/esp32-edge-computing-docs。
+文档地址：https://github.com/li-yibing/esp32-edge-computing-docs
  
 本仓库为[esp32-edge-computing](https://github.com/li-yibing/esp32-edge-computing)项目的说明文档。
 
@@ -42,7 +42,7 @@
 ```
 记得增加4个空格!
 可选的类型有: `attention, caution, danger, error, hint, important, note, tip, warning`
-详见 https://python-markdown.github.io/extensions/admonition/。
+详见 https://python-markdown.github.io/extensions/admonition/
 
 ## 本地测试
 在本地测试:
@@ -53,6 +53,6 @@
     pip install mkdocs mkdocs-gen-files mkdocs-awesome-pages-plugin mkdocs-material pymdown-extensions mkdocs-enumerate-headings-plugin
     ```
 3. 在仓库文件夹, 调用`mkdocs serve`(保证其运行)，会自动产生文档。
-  你可以在 http://127.0.0.1:8000/AI-on-the-edge-device-docs/查看。
+  详见 http://127.0.0.1:8000/AI-on-the-edge-device-docs/
     
   任何文件的变更都是自动发布更新的。
