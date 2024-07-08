@@ -4,7 +4,7 @@
  
 本仓库为[esp32-edge-computing](https://github.com/li-yibing/esp32-edge-computing)项目的说明文档。
 
-# 文档构建说明
+## 文档构建说明
 1. 你可以编辑任何在[docs](docs)文件夹中的`*.md`文件。
 2. 然后创建PR请求合并到`main`分支(或者直接在`main`分支编辑).
 3. 当发生合并时, [Github Actions](https://github.com/li-yibing/esp32-edge-computing-docs/actions)会重新生成文档并放置在`gh-pages`分支。 这个分支的内容会自动展示在[文档站点](https://li-yibing.github.io/esp32-edge-computing-docs/)。
